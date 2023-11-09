@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -6,12 +6,27 @@ from .serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
+from drf_yasg.utils import swagger_auto_schema
+
+
 # Create your views here.
 @api_view(['POST'])
 def login(request):
     return Response({''})
 
+@swagger_auto_schema(
+    method='post',
+    request_body=UserSerializer,
+    responses={
+        200: 'User registered succesfully',
+        400: 'Bad request'
+    },
+    security=[],
+    operation_summary="User register",
+    operation_description="This view allows you to register a new user.",
+)
 @api_view(['POST'])
+@permission_classes([])
 def register(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
