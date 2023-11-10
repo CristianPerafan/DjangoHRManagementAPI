@@ -20,6 +20,9 @@ The login method processes user login requests, authenticating the user if the p
 
 ![](./img/login_user.png)
 
+## **Logout**
+The logout method processes user logout requests, invalidating the user's token.
+
 
 ### **Check token**
 
