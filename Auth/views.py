@@ -76,6 +76,16 @@ def test_token(request):
     token_age = timezone.now() - token.created
     return Response({'detail':'Token is valid', 'token_age': str(token_age)})
 
+@swagger_auto_schema(
+    method='post',
+    responses={
+        200: 'User logged out succesfully',
+        400: 'Bad request'
+    },
+    security=[],
+    operation_summary="Logout a user",
+    operation_description="This view allows to a registered user logged out.",
+)
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
