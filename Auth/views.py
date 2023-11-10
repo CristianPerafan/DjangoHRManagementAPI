@@ -53,7 +53,7 @@ def login(request):
     user = get_object_or_404(User,username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({'detail':'Not found'},status=status.HTTP_400_BAD_REQUEST)
-    token, created = Token.objects.get_or_create(user=user)
+    token = Token.objects.get_or_create(user=user)
     serializer = UserSerializer(user)
     return Response({'token': token.key})
 
@@ -75,3 +75,11 @@ def test_token(request):
     token = Token.objects.get(user=request.user)
     token_age = timezone.now() - token.created
     return Response({'detail':'Token is valid', 'token_age': str(token_age)})
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication,TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    token = Token.objects.get(user=request.user)
+    token.delete()
+    return Response(status=status.HTTP_200_OK)
