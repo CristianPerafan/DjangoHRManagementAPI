@@ -14,4 +14,20 @@ The register method processes user registration requests, creating a new user ac
 
 ![](./img/register_user.png)
 
+### **Login**
+
+The login method processes user login requests, authenticating the user if the provided data is valid. The method returns a JSON response a token for authorization.
+
+![](./img/login_user.png)
+
+
+### **Check token**
+
+The check token method processes user token requests, return a JSON response with the token valid time if the provided token is valid.
+
+![](./img/test_token.png)
+
+
+## **Documentation**
+To improve user experience and streamline implementation, the API incorporates the Swagger documentation system. Swagger facilitates a comprehensive, easy-to-use documentation process, ensuring users have clear guidance on API endpoints, data formats, authentication methods, and available functionality.
 
