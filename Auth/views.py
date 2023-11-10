@@ -12,11 +12,6 @@ from drf_yasg.utils import swagger_auto_schema
 from .serializers import UserSerializer
 
 
-# Create your views here.
-@api_view(['POST'])
-def login(request):
-    return Response({''})
-
 @swagger_auto_schema(
     method='post',
     request_body=UserSerializer,
@@ -41,6 +36,18 @@ def register(request):
         return Response({'token': token.key, 'user':serializer.data})
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+
+@swagger_auto_schema(
+    method='post',
+    request_body=UserSerializer,
+    responses={
+        200: 'User authentication succesfully',
+        400: 'Bad request'
+    },
+    security=[],
+    operation_summary="User login",
+    operation_description="This view allows you to login a  uregistered ser.",
+)
 @api_view(['POST'])
 def login(request):
     user = get_object_or_404(User,username=request.data['username'])
@@ -51,6 +58,16 @@ def login(request):
     return Response({'token': token.key})
 
 
+@swagger_auto_schema(
+    method='get',
+    responses={
+        200: 'User token validated succesfully',
+        400: 'Bad request'
+    },
+    security=[],
+    operation_summary="Test validity of a user token",
+    operation_description="This view allows to a user check the token's validity.",
+)
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated])
