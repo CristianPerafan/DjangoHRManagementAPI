@@ -5,12 +5,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import authentication_classes,permission_classes
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from drf_yasg.utils import swagger_auto_schema
 from .serializers import UserSerializer
-
+from .models import CustomUser
 
 @swagger_auto_schema(
     method='post',
@@ -25,12 +24,13 @@ from .serializers import UserSerializer
 )
 @api_view(['POST'])
 @permission_classes([])
-def register(request):
+def registerEmployee(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        user = User.objects.get(username=request.data['username'])
+        user = CustomUser.objects.get(username=request.data['username'])
         user.set_password(request.data['password'])
+        user.is_employee = True
         user.save()
         token = Token.objects.create(user=user)
         return Response({'token': token.key, 'user':serializer.data})
@@ -50,7 +50,7 @@ def register(request):
 )
 @api_view(['POST'])
 def login(request):
-    user = get_object_or_404(User,username=request.data['username'])
+    user = get_object_or_404(CustomUser,username=request.data['username'])
     if not user.check_password(request.data['password']):
         return Response({'detail':'Not found'},status=status.HTTP_400_BAD_REQUEST)
     token = Token.objects.get_or_create(user=user)
