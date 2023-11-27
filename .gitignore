@@ -20,7 +20,7 @@ db.sqlite3
 logs/
 
 # Database migrations
-/migrations/
+Auth/migrations/
 
 # Cache
 /cache/
