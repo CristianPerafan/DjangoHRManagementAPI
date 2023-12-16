@@ -6,3 +6,4 @@ class CustomUser(AbstractUser):
     is_admin = models.BooleanField(default=False)
     is_manager = models.BooleanField(default=False)
     is_employee = models.BooleanField(default=False)
+    
