@@ -3,24 +3,15 @@ from django.db import models
 # Create your models here.
 
 class Role(models.Model):
-    ROLE_CHOICES = (
-        ('A', 'Admin'),
-        ('S', 'Supervisor'),
-        ('U', 'Employee'),
-    )
-    
+    id = models.AutoField(primary_key=True)    
     name = models.CharField(max_length=100)
     
     def __str__(self):
         return self.name
 
 class Gender(models.Model):
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
-    )
-    name = models.CharField(max_length=100,choices=GENDER_CHOICES )
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     
     def __str__(self):
         return self.name

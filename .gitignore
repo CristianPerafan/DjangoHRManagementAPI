@@ -21,6 +21,7 @@ logs/
 
 # Database migrations
 Auth/migrations/
+Employees/migrations/
 
 # Cache
 /cache/
