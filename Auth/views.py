@@ -1,15 +1,47 @@
-from rest_framework.decorators import api_view,permission_classes
 from rest_framework import status
+from rest_framework.decorators import api_view,permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import authentication_classes,permission_classes
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.exceptions import APIException
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from drf_yasg.utils import swagger_auto_schema
 from .serializers import UserSerializer
 from .models import CustomUser
+
+class AssignUserToEmployee(APIView):
+    
+    def post(self,request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+
+                try:
+                    user = CustomUser.objects.get(employee_id=request.data['employee_id'])
+                    return Response({'detail':'User already exists'},status=status.HTTP_400_BAD_REQUEST)
+                except CustomUser.DoesNotExist:
+  
+                    serializer.save()
+                    user = CustomUser.objects.get(employee_id=request.data['employee_id'])
+                    user.set_password(request.data['password'])
+                    user.username = request.data['employee_id']
+                    user.save()
+
+                    token = Token.objects.create(user=user)
+
+                    return Response({'token': token.key, 'user':serializer.data})
+                
+                
+            except Exception as e:
+                print(e)
+                raise APIException(str(e))
+        
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 @swagger_auto_schema(
     method='post',
