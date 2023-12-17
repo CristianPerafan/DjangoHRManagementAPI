@@ -28,6 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+AUTH_USER_MODEL = 'Auth.CustomUser'
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'Auth',
-
+    'Employees',
 ]
 
 MIDDLEWARE = [
