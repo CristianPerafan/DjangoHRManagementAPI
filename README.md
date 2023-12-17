@@ -8,3 +8,38 @@ The "Django HR Management API" project aims to develop an advanced REST API usin
 ## **Documentation**
 To improve user experience and streamline implementation, the API incorporates the Swagger documentation system. Swagger facilitates a comprehensive, easy-to-use documentation process, ensuring users have clear guidance on API endpoints, data formats, authentication methods, and available functionality.
 
+## **Installation**
+
+To install the project, follow these steps:
+
+1. Clone the repository to your local machine.
+   ```shell
+    git clone https://github.com/CristianPerafan/DjangoHRManagementAPI.git
+    ```
+2. Create a virtual environment in the project directory.
+    ```shell
+     python -m venv venv
+     ```
+3. Activate the virtual environment.
+
+    Windows:
+    ```shell
+    ./venv/Scripts/activate
+    ```
+    Linux:
+    ```shell
+    source venv/bin/activate
+    ```
+4. Install the project dependencies.
+    ```shell
+    pip install -r requirements.txt
+    ```
+5. Make migrations and migrate.
+    ```shell
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+
+
+
+
